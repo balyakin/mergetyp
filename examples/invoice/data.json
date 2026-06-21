@@ -1,0 +1,27 @@
+[
+  {
+    "invoice_id": "INV-001",
+    "date": "2026-06-21",
+    "client": "Globex Corporation",
+    "email": "ap@globex.example",
+    "items": [
+      {"description": "Consulting — Strategy", "qty": 10, "price": 150},
+      {"description": "Hosting (monthly)", "qty": 1, "price": 99}
+    ],
+    "subtotal": 1599,
+    "tax": 159.9,
+    "total": 1758.9
+  },
+  {
+    "invoice_id": "INV-002",
+    "date": "2026-06-21",
+    "client": "Initech",
+    "email": "billing@initech.example",
+    "items": [
+      {"description": "Licence — Pro tier", "qty": 5, "price": 49}
+    ],
+    "subtotal": 245,
+    "tax": 24.5,
+    "total": 269.5
+  }
+]

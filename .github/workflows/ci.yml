@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      TYPST_VERSION: v0.15.0
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: python -m pip install -e ".[dev]"
+
+      - name: Ruff
+        run: ruff check .
+
+      - name: Mypy
+        run: mypy src
+
+      - name: Pytest
+        run: pytest -q
+
+      - name: Install Typst
+        run: |
+          mkdir -p /tmp/typst
+          curl -sSL \
+            "https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz" \
+            | tar -xJ --strip-components=1 -C /tmp/typst
+          sudo mv /tmp/typst/typst /usr/local/bin/typst
+          typst --version
+
+      - name: Smoke certificate example
+        run: |
+          mergetyp examples/certificate/template.typ examples/certificate/data.csv \
+            -o /tmp/mergetyp-certificate-out \
+            --name-pattern "{name}.pdf"
+          test -s "/tmp/mergetyp-certificate-out/Alice Johnson.pdf"
+
+      - name: Smoke invoice example
+        run: |
+          mergetyp examples/invoice/template.typ examples/invoice/data.json \
+            -o /tmp/mergetyp-invoice-out \
+            --name-pattern "{invoice_id}.pdf"
+          test -s "/tmp/mergetyp-invoice-out/INV-001.pdf"
