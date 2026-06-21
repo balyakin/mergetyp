@@ -68,6 +68,12 @@ out/Bob.pdf
 out/Charlie.pdf
 ```
 
+Generated example:
+
+[examples/certificate/generated/certificate-1.pdf](examples/certificate/generated/certificate-1.pdf)
+
+![Generated certificate preview](examples/certificate/generated/certificate-preview.png)
+
 ## Template contract
 
 Every template must export `render(record)`.
