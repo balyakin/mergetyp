@@ -56,7 +56,7 @@ def validate_pattern_structure(pattern: str) -> None:
 def validate_pattern_field(
     pattern: str,
     field_name: typing.Optional[str],
-    format_spec: str,
+    format_spec: typing.Optional[str],
     conversion: typing.Optional[str],
 ) -> None:
     """Validate one filename pattern field
