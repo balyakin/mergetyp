@@ -130,8 +130,17 @@ Options:
 
 ## Security
 
-Typst templates are executable document code. Run `mergetyp` only with trusted templates. Do not keep secrets in the
-template directory because Typst can read files inside its project root.
+Typst is well sandboxed: templates have no network access and cannot run shell commands, and there are no known
+remote-code-execution vulnerabilities. Running an untrusted Typst template is generally lower risk than running an
+untrusted Python package.
+
+The one threat worth knowing about for `mergetyp` is **local file reading**. To compile a record, `mergetyp` invokes
+`typst compile` with the template's own directory as the Typst `--root`. That means a template can `#read()`,
+`#csv()`, `#json()`, or `#image()` any file in that directory and embed its contents into the output PDF. For example,
+a template you downloaded from the internet could read a `secrets.txt` placed next to it and hide the text inside the
+generated PDF.
+
+So: run `mergetyp` only with templates you trust, and do not keep sensitive files in the template directory.
 
 Temporary `.typ` files contain record data and are deleted after rendering. If the process is killed by the operating
 system, cleanup is not guaranteed.
