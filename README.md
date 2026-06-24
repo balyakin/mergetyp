@@ -154,6 +154,10 @@ examples/certificate
 examples/invoice
 ```
 
+## Development
+
+This project was developed with AI assistance and is maintained by the author.
+
 ## License
 
 MIT.
